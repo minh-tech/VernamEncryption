@@ -17,17 +17,17 @@ def cipherVernam(plain_text, one_time_pad, start):
 
     # Create two dictionaries for alphabet and number
     alphabet_list = list(string.ascii_lowercase)
-    alphabet_value = {letter: i for i, letter in enumerate(alphabet_list, start=start)}
-    number_value = dict((value, key) for key, value in alphabet_value.items())
+    alphabet_key = dict((letter, i) for i, letter in enumerate(alphabet_list, start=start))
+    number_key = dict((value, key) for key, value in alphabet_key.items())
 
-    # print("Aphabet  :", alphabet_value)
-    # print("Number   :", number_value)
+    print("Alphabet :", alphabet_key)
+    print("Number   :", number_key)
 
     # Change alphabet to number
-    plain_text_value = [alphabet_value[char] for char in plain_text]
-    one_time_pad_value = [alphabet_value[char] for char in one_time_pad]
+    plain_text_value = [alphabet_key[char] for char in plain_text]
+    one_time_pad_value = [alphabet_key[char] for char in one_time_pad]
 
-    # Calculate the sum of each pair-value, subtract 26 if the sum equal or more than 26 plus start
+    # Calculate the sum of each pair-value, subtract 26 if the sum equal or more than (26 + start)
     sum_value = []
     for x, y in zip(plain_text_value, one_time_pad_value):
         x_plus_y = x + y
@@ -42,8 +42,8 @@ def cipherVernam(plain_text, one_time_pad, start):
     print("1-time pad values:", ["%02d" % n for n in one_time_pad_value])
     print("Sum values       :", ["%02d" % n for n in sum_value])
 
-    # Get cipher text be convert number to character
-    cipher_text = ''.join([number_value[value] for value in sum_value])
+    # Cipher text be convert from number to character
+    cipher_text = ''.join([number_key[value] for value in sum_value])
     print("Cipher text:", cipher_text)
 
 
